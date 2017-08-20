@@ -105,6 +105,13 @@ class PriorityQueueWithFunction(PriorityQueue):
     "Adds an item to the queue with priority from the priority function"
     PriorityQueue.push(self, item, self.priorityFunction(item))
 
+  def extend(self, items):
+    for item in items:
+      self.push(item)
+
+  def __contains__(self, item):
+    return item in self.heap
+
 
 def manhattanDistance( xy1, xy2 ):
   "Returns the Manhattan distance between points xy1 and xy2"
