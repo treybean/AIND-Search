@@ -127,6 +127,24 @@ class Node:
     def __hash__(self):
         return hash(self.state)
 
+def graphSearch(problem, frontier):
+  frontier.push(Node(problem.getStartState()))
+  explored = set()
+
+  while frontier:
+    node = frontier.pop()
+
+    if problem.isGoalState(node.state):
+      return node.solution()
+
+    explored.add(node.state)
+
+    frontier.extend(child for child in node.expand(problem)
+                        if child.state not in explored and
+                        child not in frontier)
+
+  return None
+
 def depthFirstSearch(problem):
   """
   Search the deepest in the search tree first
@@ -144,24 +162,7 @@ def depthFirstSearch(problem):
   print "Start's successors:", problem.getSuccessors(problem.getStartState())
   """
   "*** YOUR CODE HERE ***"
-  frontier = util.Stack()
-  frontier.push(Node(problem.getStartState()))
-  explored = set()
-
-  while frontier:
-    node = frontier.pop()
-
-    if problem.isGoalState(node.state):
-    #   print("FOUND GOAL: {}".format(node))
-      return node.solution()
-
-    explored.add(node.state)
-
-    frontier.extend(child for child in node.expand(problem)
-                        if child.state not in explored and
-                        child not in frontier)
-
-  return None
+  return graphSearch(problem, util.Stack())
 
 def breadthFirstSearch(problem):
   """
@@ -169,24 +170,7 @@ def breadthFirstSearch(problem):
   [2nd Edition: p 73, 3rd Edition: p 82]
   """
   "*** YOUR CODE HERE ***"
-  frontier = util.Queue()
-  frontier.push(Node(problem.getStartState()))
-  explored = set()
-
-  while frontier:
-    node = frontier.pop()
-
-    if problem.isGoalState(node.state):
-    #   print("FOUND GOAL: {}".format(node))
-      return node.solution()
-
-    explored.add(node.state)
-
-    frontier.extend(child for child in node.expand(problem)
-                        if child.state not in explored and
-                        child not in frontier)
-
-  return None
+  return graphSearch(problem, util.Queue())
 
 def uniformCostSearch(problem):
   "Search the node of least total cost first. "
