@@ -169,7 +169,24 @@ def breadthFirstSearch(problem):
   [2nd Edition: p 73, 3rd Edition: p 82]
   """
   "*** YOUR CODE HERE ***"
-  util.raiseNotDefined()
+  frontier = util.Queue()
+  frontier.push(Node(problem.getStartState()))
+  explored = set()
+
+  while frontier:
+    node = frontier.pop()
+
+    if problem.isGoalState(node.state):
+    #   print("FOUND GOAL: {}".format(node))
+      return node.solution()
+
+    explored.add(node.state)
+
+    frontier.extend(child for child in node.expand(problem)
+                        if child.state not in explored and
+                        child not in frontier)
+
+  return None
 
 def uniformCostSearch(problem):
   "Search the node of least total cost first. "

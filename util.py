@@ -58,6 +58,12 @@ class Queue:
     "Returns true if the queue is empty"
     return len(self.list) == 0
 
+  def extend(self, items):
+    self.list[0:0] = items
+
+  def __contains__(self, item):
+    return item in self.list
+
 class PriorityQueue:
   """
     Implements a priority queue data structure. Each inserted item
