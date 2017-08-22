@@ -451,7 +451,13 @@ def foodHeuristic(state, problem):
   """
   position, foodGrid = state
   "*** YOUR CODE HERE ***"
-  return 0
+  # return len(foodGrid.asList())
+
+  def straightLineDistance(position, target):
+      return ( (position[0] - target[0]) ** 2 + (position[1] - target[1]) ** 2 ) ** 0.5
+
+  sumStraightLineDistances = sum([3 * straightLineDistance(position, food) for food in foodGrid.asList()])
+  return sumStraightLineDistances
 
 class ClosestDotSearchAgent(SearchAgent):
   "Search for all food using a sequence of searches"
