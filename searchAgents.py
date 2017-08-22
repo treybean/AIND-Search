@@ -354,8 +354,13 @@ def cornersHeuristic(state, problem):
   corners = problem.corners # These are the corner coordinates
   walls = problem.walls # These are the walls of the maze, as a Grid (game.py)
 
-  "*** YOUR CODE HERE ***"
-  return 0 # Default to trivial solution
+  def straightLineDistance(position, target):
+      return ( (position[0] - target[0]) ** 2 + (position[1] - target[1]) ** 2 ) ** 0.5
+
+  unvisitedCorners = set(problem.corners).difference(state[1])
+
+  sumStraightLineDistances = sum([3 * straightLineDistance(state[0], corner) for corner in unvisitedCorners])
+  return sumStraightLineDistances
 
 class AStarCornersAgent(SearchAgent):
   "A SearchAgent for FoodSearchProblem using A* and your foodHeuristic"
